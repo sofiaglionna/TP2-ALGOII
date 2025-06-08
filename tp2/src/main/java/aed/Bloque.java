@@ -15,13 +15,13 @@ public class Bloque {
     private int suma;
     private int longitud;
 
-    public Bloque(ArrayList<Transaccion> listaTrans){ //constructor: nos pasan por parámetro en Berretacoin una lista de transacciones, y nuestro constructor de bloque nos v
-        this.longitud = listaTrans.size();
+    public Bloque(Transaccion[] listaTrans){ //constructor: nos pasan por parámetro en Berretacoin una lista de transacciones, y nuestro constructor de bloque nos v
+        this.longitud = listaTrans.length;
         this.transacciones = new Heap<Transaccion>(); 
         this.suma = 0;
-        for (int i=0; i<listaTrans.size(); i++){
-            transacciones.agregar(listaTrans.get(i));
-            this.suma= this.suma + (listaTrans.get(i)).monto();
+        for (int i=0; i<listaTrans.length; i++){ //hay que cambiarlo
+            transacciones.agregar(listaTrans[i]);
+            this.suma= this.suma + (listaTrans[i]).monto();
         }
     }
 
@@ -37,7 +37,7 @@ public class Bloque {
         else return suma / longitud;
     }
     
-    public Transaccion TransaccionMayor(){
+    public Transaccion transaccionMayor(){
         return transacciones.Raiz();
     }
 }

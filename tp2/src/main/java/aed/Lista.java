@@ -6,7 +6,7 @@ public class Lista<T> {
     private Nodo cabeza;
     private Nodo cola;
 
-    private class Nodo {
+    public class Nodo { // lo puse en public pq no me
         T valor;
         Nodo siguiente;
         Nodo anterior;
