@@ -15,12 +15,41 @@ public class Transaccion implements Comparable<Transaccion> {
 
     @Override
     public int compareTo(Transaccion otro) {
-        throw new UnsupportedOperationException("Implementar!");
+         if(this.id < otro.id){
+             return -1; // va antes si tiene menor id
+            } else if (this.id > otro.id) {
+                return 1; // va despues si tiene mayor id
+            } else {
+                    if(this.monto > otro.monto) {
+                        return -1; // mismo id, pero this tiene mayor monto va antess
+                    }
+                    else if(this.monto < otro.monto) {
+                        return 1; // mismo id, pero this tiene menor monto va despuesss
+                    }
+                    else {
+                        return 0; //mismo id y mismo monto
+                    }   
+                    
+                }
     }
 
     @Override
     public boolean equals(Object otro){
-        throw new UnsupportedOperationException("Implementar!");
+        if(otro.getClass() != this.getClass()) {
+            return false;
+        }
+        else if(otro == null) {
+            return false;
+        }
+        else {
+            Transaccion otra = (Transaccion) otro;
+            if(this.id == otra.id) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
     }
 
     public int monto() {
