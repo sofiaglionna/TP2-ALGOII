@@ -1,9 +1,22 @@
 package aed;
+import java.util.ArrayList;
 
 public class Berretacoin {
 
+    private Lista<Bloque> blockchain; //lista doblemente enlazada de los bloques de Berretacoin
+    private Heap<PersonaBalance> mayorTenedor; //heap ordenado por el balance de las personas (maxHeap)
+    private Lista transaccionesOrdenadasPorID; //lista doblemente enlazada de transaccionesOrdenadasPorID que nos pasan por parametro 
+
+
     public Berretacoin(int n_usuarios){
-        throw new UnsupportedOperationException("Implementar!");
+        blockchain = new Lista<Bloque>();
+        mayorTenedor = new Heap();
+        transaccionesOrdenadasPorID = new Lista();
+
+        for(int i = 0; i < n_usuarios; i++) {
+            PersonaBalance pb = new PersonaBalance(i,0);
+            mayorTenedor.agregar(pb);
+        }
     }
 
     public void agregarBloque(Transaccion[] transacciones){

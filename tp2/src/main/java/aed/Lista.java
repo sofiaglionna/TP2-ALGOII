@@ -41,7 +41,6 @@ public class Lista<T> {
        
         if (longitud == 0){
             Nodo primerNodo = new Nodo(elem);
-            primerNodo.valor = elem;
             primerNodo.siguiente = null;
             primerNodo.anterior = null;
             this.cabeza = primerNodo;
@@ -49,7 +48,6 @@ public class Lista<T> {
         }
         else{
             Nodo nuevoNodo = new Nodo(elem);
-            nuevoNodo.valor = elem;
             nuevoNodo.siguiente = this.cabeza;
             nuevoNodo.anterior = null; 
             this.cabeza.anterior = nuevoNodo; 
@@ -62,7 +60,6 @@ public class Lista<T> {
        
         if (longitud == 0){
             Nodo primerNodo = new Nodo(elem);
-            primerNodo.valor = elem;
             primerNodo.siguiente = null;
             primerNodo.anterior = null;
             this.cabeza = primerNodo;
@@ -70,7 +67,6 @@ public class Lista<T> {
         }
         else{
             Nodo nuevoNodo = new Nodo(elem);
-            nuevoNodo.valor = elem;
             nuevoNodo.siguiente = null;
             nuevoNodo.anterior = this.cola; 
             this.cola.siguiente = nuevoNodo; 
@@ -106,7 +102,5 @@ public class Lista<T> {
         }
         longitud--;
     }
-
-
 
 }
