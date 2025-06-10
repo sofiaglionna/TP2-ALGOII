@@ -2,28 +2,35 @@ package aed;
 
 public class Usuario implements Comparable<Usuario>{
     private int id_usuario;
-    private int saldo;
-
-    public Usuario(int id_usuario, int saldo) {
+    private int balance;
+    
+    public Usuario(int id_usuario, int balance) {
         this.id_usuario = id_usuario;
-        this.saldo = saldo;
+        this.balance = balance;
     }
 
+    public int id_usuario() {
+        return id_usuario;
+    }
+
+    public int balance() {
+        return balance;
+    }
 
     @Override
     public int compareTo(Usuario otra) {
-        if(this.saldo > otra.saldo){
-            return 1; // va antes si tiene mayor saldo
+        if(this.balance > otra.balance){
+            return 1; // va antes si tiene mayor balance
             } 
-        if (this.saldo < otra.saldo) {
-            return -1; // va despues si tiene menor saldo
+        if (this.balance < otra.balance) {
+            return -1; // va despues si tiene menor balance
             } 
-        else { // caso cuando tienen mismo saldo
+        else { // caso cuando tienen mismo balance
             if(this.id_usuario > otra.id_usuario) {
-                return -1; // mismo saldo que el padre pero mayor id_usuario
+                return -1; // mismo balance que el padre pero mayor id_usuario
             }
             else {
-                return 1; // mismo saldo que el padre pero menor id_usuario
+                return 1; // mismo balance que el padre pero menor id_usuario
             }     
         }
     }

@@ -25,6 +25,11 @@ public class Berretacoin {
         this.blockchain.agregarAtras(nuevoBloque); // Agrego el Bloque a la blockchain
 
 
+
+        for(int i = 0; i < listaTrans.length; i++){
+            //AAAAAAAAAA
+        } 
+
     }
 
     public Transaccion txMayorValorUltimoBloque(){
@@ -41,12 +46,17 @@ public class Berretacoin {
     }
     
 
-    public int maximoTenedor(){
-        throw new UnsupportedOperationException("Implementar!");
-    }
+    public int maximoTenedor(){ // O(1)
+        return mayorTenedor.Raiz().id_usuario(); // primero obtengo la raiz del Heap (o sea la transaccion que tiene mayor monto y despues menor id del heap Mayor Tenedor)
+    }                                           // el compareTo de usuario ya lo ordena
 
-    public int montoMedioUltimoBloque(){
-        throw new UnsupportedOperationException("Implementar!");
+    public float montoMedioUltimoBloque(){ // O(1)
+        if(blockchain.longitud()==0){
+            return 0;}
+
+        Lista<Bloque>.Nodo ultimoNodo = blockchain.getCola(); // obtengo el ultimo nodo primero
+        Bloque ultimoBloque = ultimoNodo.valor; // tomo el valor guardado en el ultimo bloque
+        return   ultimoBloque.MontoMedio(); // calcula y devuelve el monto Medio 
     }
 
     public void hackearTx(){
