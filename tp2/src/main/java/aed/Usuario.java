@@ -1,16 +1,17 @@
 package aed;
-public class PersonaBalance implements Comparable<PersonaBalance>{
+
+public class Usuario implements Comparable<Usuario>{
     private int id_usuario;
     private int saldo;
 
-    public PersonaBalance(int id_usuario, int saldo) {
+    public Usuario(int id_usuario, int saldo) {
         this.id_usuario = id_usuario;
         this.saldo = saldo;
     }
 
 
     @Override
-    public int compareTo(PersonaBalance otra) {
+    public int compareTo(Usuario otra) {
         if(this.saldo > otra.saldo){
             return 1; // va antes si tiene mayor saldo
             } 

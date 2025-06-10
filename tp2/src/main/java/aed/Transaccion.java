@@ -36,17 +36,12 @@ public class Transaccion implements Comparable<Transaccion> {
         if(otro.getClass() != this.getClass()) {
             return false;
         }
-        else if(otro == null) {
-            return false;
+        Transaccion otra = (Transaccion) otro;
+        if(this.id == otra.id) {
+            return true;
         }
         else {
-            Transaccion otra = (Transaccion) otro;
-            if(this.id == otra.id) {
-                return true;
-            }
-            else {
-                return false;
-            }
+            return false;
         }
     }
 

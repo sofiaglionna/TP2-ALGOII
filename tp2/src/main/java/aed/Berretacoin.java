@@ -1,20 +1,20 @@
 package aed;
-import java.util.ArrayList;
+
 
 public class Berretacoin {
 
     private Lista<Bloque> blockchain; //lista doblemente enlazada de los bloques de Berretacoin
-    private Heap<PersonaBalance> mayorTenedor; //heap ordenado por el balance de las personas (maxHeap)
+    private Heap<Usuario> mayorTenedor; //heap ordenado por el balance de las personas (maxHeap)
     private Transaccion[] transaccionesOrdenadasPorID; //lista de transaccionesOrdenadasPorID !!!!DEL ULTIMO BLOQUE AGREGADO!!!! que nos pasan por parametro 
 
 
     public Berretacoin(int n_usuarios){
         blockchain = new Lista<Bloque>();
-        mayorTenedor = new Heap();
+        mayorTenedor = new Heap<Usuario>();
         transaccionesOrdenadasPorID = new Transaccion[n_usuarios]; //creo una lista de transacciones de tamaño n_usuarios
 
         for(int i = 0; i < n_usuarios; i++) {
-            PersonaBalance pb = new PersonaBalance(i,0);
+            Usuario pb = new Usuario(i,0);
             mayorTenedor.agregar(pb);
         }
     }
@@ -31,6 +31,7 @@ public class Berretacoin {
         return blockchain.getCola().valor.transaccionMayor();
     }
 
+    
     public Transaccion[] txUltimoBloque(){ //hace una copia ---> O(n) = O(cant transacciones)
         Transaccion[] copia = new Transaccion[transaccionesOrdenadasPorID.length];
         for (int i = 0; i < transaccionesOrdenadasPorID.length; i++) {

@@ -1,5 +1,4 @@
 package aed;
-import java.util.ArrayList;
 //* posibles metodos
 
 
@@ -30,7 +29,7 @@ public class Bloque {
         return;
     }
     
-    private float MontoMedio(){
+    public float MontoMedio(){
         if(longitud == 0){
             return 0;
         }
