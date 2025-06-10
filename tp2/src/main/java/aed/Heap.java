@@ -7,7 +7,17 @@ public class Heap<T extends Comparable<T>> { // el cmparable es para poder usar 
     public Heap() {
         heap = new ArrayList<>();
     }
+    public Heap(ArrayList<T> elementos) { // constructor del heapiFy
+        heap = new ArrayList<>(elementos); // copia los elementos del heap
+        heapify(); // heapify para organizar los elementos y aseguro que siga cumpliendo ese "orden"
+    }
 
+    private void heapify(){
+        int ultimoPadre =(heap.size() / 2) -1; // ese es el metodo para calcular el ultimo nodo padre
+        for(int i = ultimoPadre; i >=0; i--) { // recorro desde el ultimo padre hasta la raiz y aplica sifDown a cada uno
+            siftDown(i);
+        }
+    }
     public int cardinal () {
         return heap.size();    
     }
