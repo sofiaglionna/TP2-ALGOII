@@ -8,7 +8,7 @@ public class Berretacoin {
     private Transaccion[] transaccionesOrdenadasPorID; //lista de transaccionesOrdenadasPorID !!!!DEL ULTIMO BLOQUE AGREGADO!!!! que nos pasan por parametro 
 
 
-    public Berretacoin(int n_usuarios){
+    public Berretacoin(int n_usuarios){ // por el hepify la complejidad es O(n)
         blockchain = new Lista<Bloque>();
         mayorTenedor = new Heap<Usuario>();
         transaccionesOrdenadasPorID = new Transaccion[n_usuarios]; //creo una lista de transacciones de tamaño n_usuarios
@@ -19,11 +19,11 @@ public class Berretacoin {
         }
     }
 
-    public void agregarBloque(Transaccion[] listaTrans){
+    public void agregarBloque(Transaccion[] listaTrans){ //O(N_b * log(P))
+
         this.transaccionesOrdenadasPorID = listaTrans; // actualizo el observador de la lista de transacciones para que sea siempre la del ultimo bloque
         Bloque nuevoBloque = new Bloque(listaTrans); // Creo el Heap (Bloque) con la lista de transacciones
         this.blockchain.agregarAtras(nuevoBloque); // Agrego el Bloque a la blockchain
-
 
 
         for(int i = 0; i < listaTrans.length; i++){
@@ -47,19 +47,24 @@ public class Berretacoin {
     
 
     public int maximoTenedor(){ // O(1)
-        return mayorTenedor.Raiz().id_usuario(); // primero obtengo la raiz del Heap (o sea la transaccion que tiene mayor monto y despues menor id del heap Mayor Tenedor)
+        return mayorTenedor.raiz().id_usuario(); // primero obtengo la raiz del Heap (o sea la transaccion que tiene mayor monto y despues menor id del heap Mayor Tenedor)
     }                                           // el compareTo de usuario ya lo ordena
 
     public float montoMedioUltimoBloque(){ // O(1)
         if(blockchain.longitud()==0){
             return 0;}
-
+        
         Lista<Bloque>.Nodo ultimoNodo = blockchain.getCola(); // obtengo el ultimo nodo primero
-        Bloque ultimoBloque = ultimoNodo.valor; // tomo el valor guardado en el ultimo bloque
-        return   ultimoBloque.MontoMedio(); // calcula y devuelve el monto Medio 
+        return ultimoNodo.valor.MontoMedio();
     }
 
     public void hackearTx(){
         throw new UnsupportedOperationException("Implementar!");
     }
 }
+
+
+
+
+        //Bloque ultimoBloque = ultimoNodo.valor; // tomo el valor guardado en el ultimo bloque
+        //return   ultimoBloque.MontoMedio(); // calcula y devuelve el monto Medio 

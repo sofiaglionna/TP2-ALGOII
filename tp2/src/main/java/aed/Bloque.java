@@ -18,10 +18,11 @@ public class Bloque {
         this.longitud = listaTrans.length;
         this.transacciones = new Heap<Transaccion>(); 
         this.suma = 0;
-        for (int i=0; i<listaTrans.length; i++){ //hay que cambiarlo
-            transacciones.agregar(listaTrans[i]);
+        for (int i=0; i<listaTrans.length; i++){
+            transacciones.agregarSinOrdenar(listaTrans[i]);
             this.suma= this.suma + (listaTrans[i]).monto();
         }
+        transacciones.heapify();
     }
 
     // ver si realmente lo vamos a usar
@@ -37,7 +38,7 @@ public class Bloque {
     }
     
     public Transaccion transaccionMayor(){
-        return transacciones.Raiz();
+        return transacciones.raiz();
     }
 }
 

@@ -7,22 +7,23 @@ public class Heap<T extends Comparable<T>> { // el cmparable es para poder usar 
     public Heap() {
         heap = new ArrayList<>(); // este constructor es para un heap vacio
     }
-    public Heap(ArrayList<T> elementos) { // constructor del heap si le pasan elementos
-        heap = new ArrayList<>(elementos); // copia los elementos del heap
-        heapify(); // heapify para organizar los elementos y aseguro que siga cumpliendo ese orden O(n) al reorganizar le heap 
+    
+    public void agregarSinOrdenar(T valor){ // agrega valores de a 1 al Heap sin ordenarlos. Cuando queremos ordenarlos usamos Heapify()
+        heap.add(valor);
     }
 
-    private void heapify(){
+    public void heapify(){
         int ultimoPadre =(heap.size() / 2) -1; // ese es el metodo para calcular el ultimo nodo padre
         for(int i = ultimoPadre; i >=0; i--) { // recorro desde el ultimo padre hasta la raiz y aplica sifDown a cada uno
             siftDown(i);
         }
     }
+
     public int cardinal () {
         return heap.size();    
     }
-
-    public T Raiz() {
+    
+    public T raiz() {
         return heap.get(0); // devuelve la raiz del heap, donde la clase tran,saccion ya lo "ordena" con mayor monto y menor id
     }
 
@@ -48,22 +49,22 @@ public class Heap<T extends Comparable<T>> { // el cmparable es para poder usar 
 
     private void siftDown(int indice) {
         while(true) {
-            int indice_hijo_izq = 2 * indice + 1;
-            int indice_hijo_der = 2 * indice + 2;
+            int i_izq = 2 * indice + 1;
+            int i_der = 2 * indice + 2;
             int menor = indice;
-            if(indice_hijo_der < heap.size()) { 
-                T derecha = heap.get(indice_hijo_der);
-                T izquierda = heap.get(indice_hijo_izq);
+            if(i_der < heap.size()) { 
+                T derecha = heap.get(i_der);
+                T izquierda = heap.get(i_izq);
                 T actual = heap.get(indice);
                 if ((derecha.compareTo(actual) == 1) && (derecha.compareTo(izquierda) == 1)) {
-                    menor = indice_hijo_der;
+                    menor = i_der;
                 }
             }
-            else if(indice_hijo_izq < heap.size()) { 
-                T izquierda = heap.get(indice_hijo_izq);
+            else if(i_izq < heap.size()) { 
+                T izquierda = heap.get(i_izq);
                 T actual = heap.get(indice);
                 if(izquierda.compareTo(actual) == 1) {
-                    menor = indice_hijo_izq;
+                    menor = i_izq;
                 }
             }
             if(menor != indice) {
@@ -77,8 +78,7 @@ public class Heap<T extends Comparable<T>> { // el cmparable es para poder usar 
             }
         }
     }
- 
-
+    
     public T eliminarRaiz() {
         if (heap.isEmpty()) {
         return null;// si no hay raiz que eliminar devuelve null
@@ -95,3 +95,14 @@ public class Heap<T extends Comparable<T>> { // el cmparable es para poder usar 
     return raiz;
     }
 }
+
+
+    //constructor por copia
+    // public Heap(T[] elementos) { // constructor del heap si le pasan elementos
+    //     heap = new ArrayList<T>(); // copia los elementos del heap
+    //     for (T elemento : elementos){
+    //         heap.add(elemento);
+    //     }
+    //     heapify(); // heapify para organizar los elementos y aseguro que siga cumpliendo ese orden O(n) al reorganizar el heap 
+    // }
+

@@ -57,3 +57,21 @@ public class Transaccion implements Comparable<Transaccion> {
         return id_vendedor;
     }
 }
+
+
+
+// Paso 1: Agregas private int posicionEnHeap;
+
+
+// Paso 2: Agregar los métodos set y get:
+//public void setPosicionEnHeap(int pos) {
+//    this.posicionEnHeap = pos;
+//}
+
+//public int getPosicionEnHeap() {
+//    return this.posicionEnHeap;
+//}
+
+
+// Paso 3: Actualizar el campo posicionEnHeap cada vez que el elemento se mueve en el heap. En la clase Heap<T extends Comparable<T>>, agregá un método swap.
+// 
