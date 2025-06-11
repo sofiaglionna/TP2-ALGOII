@@ -14,8 +14,8 @@ public class Berretacoin {
         transaccionesOrdenadasPorID = new Transaccion[n_usuarios]; //creo una lista de transacciones de tamaño n_usuarios
 
         for(int i = 0; i < n_usuarios; i++) {
-            Usuario pb = new Usuario(i,0);
-            mayorTenedor.agregar(pb);
+            Usuario usuarioNuevo = new Usuario(i,0);
+            mayorTenedor.agregar(usuarioNuevo);
         }
     }
 
@@ -27,7 +27,7 @@ public class Berretacoin {
 
 
         for(int i = 0; i < listaTrans.length; i++){
-            //AAAAAAAAAA
+            // para maximoTenedor
         } 
 
     }

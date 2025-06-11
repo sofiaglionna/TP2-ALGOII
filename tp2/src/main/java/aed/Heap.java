@@ -51,18 +51,19 @@ public class Heap<T extends Comparable<T>> { // el cmparable es para poder usar 
             int indice_hijo_izq = 2 * indice + 1;
             int indice_hijo_der = 2 * indice + 2;
             int menor = indice;
-            if(indice_hijo_izq < heap.size()) { 
+            if(indice_hijo_der < heap.size()) { 
+                T derecha = heap.get(indice_hijo_der);
+                T izquierda = heap.get(indice_hijo_izq);
+                T actual = heap.get(indice);
+                if ((derecha.compareTo(actual) == 1) && (derecha.compareTo(izquierda) == 1)) {
+                    menor = indice_hijo_der;
+                }
+            }
+            else if(indice_hijo_izq < heap.size()) { 
                 T izquierda = heap.get(indice_hijo_izq);
                 T actual = heap.get(indice);
                 if(izquierda.compareTo(actual) == 1) {
                     menor = indice_hijo_izq;
-                }
-            }
-            if(indice_hijo_der < heap.size()) { 
-                T derecha = heap.get(indice_hijo_der);
-                T actual = heap.get(indice);
-                if(derecha.compareTo(actual) == 1) {
-                    menor = indice_hijo_der;
                 }
             }
             if(menor != indice) {
