@@ -5,11 +5,11 @@ public class Heap<T extends Comparable<T>> { // el cmparable es para poder usar 
     private ArrayList<T> heap;   
  
     public Heap() {
-        heap = new ArrayList<>();
+        heap = new ArrayList<>(); // este constructor es para un heap vacio
     }
-    public Heap(ArrayList<T> elementos) { // constructor del heapiFy
+    public Heap(ArrayList<T> elementos) { // constructor del heap si le pasan elementos
         heap = new ArrayList<>(elementos); // copia los elementos del heap
-        heapify(); // heapify para organizar los elementos y aseguro que siga cumpliendo ese "orden"
+        heapify(); // heapify para organizar los elementos y aseguro que siga cumpliendo ese orden O(n) al reorganizar le heap 
     }
 
     private void heapify(){
