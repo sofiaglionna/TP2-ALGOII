@@ -44,7 +44,7 @@ public class Transaccion implements Comparable<Transaccion> {
             return false;
         }
     }
-
+    
     public int monto() {
         return monto;
     }
@@ -74,4 +74,46 @@ public class Transaccion implements Comparable<Transaccion> {
 
 
 // Paso 3: Actualizar el campo posicionEnHeap cada vez que el elemento se mueve en el heap. En la clase Heap<T extends Comparable<T>>, agregá un método swap.
-// 
+// private void swap(int i, int j) {
+//    T elemI = heap.get(i);
+//    T elemJ = heap.get(j);
+
+//    heap.set(i, elemJ);
+//    heap.set(j, elemI);
+
+    // Si T es Transaccion, actualizamos su posición
+//    if (elemI instanceof Transaccion) {
+//        ((Transaccion) elemI).setPosicionEnHeap(j);
+//        ((Transaccion) elemJ).setPosicionEnHeap(i);
+//    }
+//}
+// O, mejor aún, si sabés que el heap solo va a manejar Transaccion, podés tipificarlo directamente como:
+
+
+//public class HeapTransaccion {
+//    private ArrayList<Transaccion> heap;
+
+//    private void swap(int i, int j) {
+//        Transaccion a = heap.get(i);
+//        Transaccion b = heap.get(j);
+
+//        heap.set(i, b);
+//        heap.set(j, a);
+
+//        a.setPosicionEnHeap(j);
+//        b.setPosicionEnHeap(i);
+//    }
+//}
+
+
+
+// Paso 4: Al insertar, guardá la posición actual en el objeto
+//Dentro del método insertar():
+
+
+//public void insertar(Transaccion t) {
+//    heap.add(t);
+//    int pos = heap.size() - 1;
+//    t.setPosicionEnHeap(pos);  // ← actualizamos el handle
+//    subir(pos);
+//}

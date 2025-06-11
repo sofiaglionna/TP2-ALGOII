@@ -25,6 +25,11 @@ public class Usuario implements Comparable<Usuario>{
         return balance;
     }
 
+    public void actualizarBalance(int nuevoBalance){
+        balance = nuevoBalance;
+    }
+
+
     @Override
     public int compareTo(Usuario otra) {
         if(this.balance > otra.balance){
