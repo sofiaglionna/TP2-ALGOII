@@ -15,14 +15,24 @@ public class Bloque {
     private int longitud;
 
     public Bloque(Transaccion[] listaTrans){ //constructor: nos pasan por parámetro en Berretacoin una lista de transacciones, y nuestro constructor de bloque nos v
-        this.longitud = listaTrans.length;
         this.transacciones = new Heap<Transaccion>(); 
         this.suma = 0;
         for (int i=0; i<listaTrans.length; i++){
             transacciones.agregarSinOrdenar(listaTrans[i]);
-            this.suma= this.suma + (listaTrans[i]).monto();
+            if (listaTrans[i].id_comprador()!=0){
+                this.suma= this.suma + (listaTrans[i]).monto();
+                this.longitud += 1;
+            }
         }
         transacciones.heapify();
+    }
+
+    public Transaccion devolver(int i) {
+        return transacciones.obtener(i);
+    }
+
+    public int longitud() {
+        return longitud;
     }
 
     // ver si realmente lo vamos a usar
@@ -39,6 +49,10 @@ public class Bloque {
     
     public Transaccion transaccionMayor(){
         return transacciones.raiz();
+    }
+
+    public Transaccion eliminarTransaccionMayor(){
+        return transacciones.eliminarRaiz();
     }
 }
 

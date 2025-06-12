@@ -2,7 +2,7 @@ package aed;
 import java.util.ArrayList;
 
 public class Diccionario {
-
+    //VER SI LA LISTA DE USUARIOS ES NECESARIA
     private Usuario[] usuarios; // array para almacenar usuarios directamente
     private int[] posicionesEnHeap; // array para rastrear posiciones en el heap
     private int longitud;
@@ -11,16 +11,16 @@ public class Diccionario {
         longitud = cantidadUsuarios;
         usuarios = new Usuario[cantidadUsuarios + 1]; //+1 pq IDs van de 1 a n
         posicionesEnHeap = new int[cantidadUsuarios + 1]; // para rastrear posiciones en heap
-
+        this.usuarios[0] = new Usuario(0,0);
+        this.posicionesEnHeap[0] = 0;
         for (int i = 1; i <= cantidadUsuarios; i++) {
-            this.usuarios[i] = new Usuario(i, 0); // Balance inicial 0
-            this.posicionesEnHeap[i] = i - 1; // Posición inicial en heap (0-indexado)
-        }
+            this.usuarios[i] = new Usuario(i, 0); // balance inicial 0
+            this.posicionesEnHeap[i] = i-1; // posición inicial en heap (0-indexado)
+        } // ver si las posiciones deberian ser [i - 1] en vez de [i]
     }
 
     public Usuario obtenerUsuario(int id) {
         return usuarios[id];
-    
     }
 
     public int obtenerBalance(int id) {
@@ -35,7 +35,8 @@ public class Diccionario {
         posicionesEnHeap[id] = nuevaPosicion;
     }
 
-    public void actualizarBalance(int id, int nuevoBalance) {
+    //ver si lo usamos
+    public void actualizarBalanceDict(int id, int nuevoBalance) {
         usuarios[id].actualizarBalance(nuevoBalance);
     }
 

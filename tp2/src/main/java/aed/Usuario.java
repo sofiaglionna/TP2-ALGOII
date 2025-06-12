@@ -9,13 +9,13 @@ public class Usuario implements Comparable<Usuario>{
         this.balance = balance;
     }
 
-    public void comprador(int monto){
-        this.balance = this.balance - monto;
-    }
+    // public void comprar(int monto){
+    //     this.balance = this.balance - monto;
+    // }
 
-    public void vendedor(int monto){
-        this.balance = this.balance + monto;
-    }
+    // public void vender(int monto){
+    //     this.balance = this.balance + monto;
+    // }
 
     public int id_usuario() {
         return id_usuario;
