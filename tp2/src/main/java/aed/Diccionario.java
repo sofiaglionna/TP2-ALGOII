@@ -1,7 +1,7 @@
 package aed;
 
 public class Diccionario {
-    //VER SI LA LISTA DE USUARIOS ES NECESARIA
+    //VER SI LA LISTA DE USUARIOS ES NECESARIA (ver porque tenemos que abstraer)
     private Usuario[] usuarios; // array para almacenar usuarios directamente
     private int[] posicionesEnHeap; // array para rastrear posiciones en el heap
     private int longitud;
@@ -10,15 +10,6 @@ public class Diccionario {
         this.longitud = cantidadUsuarios+1; //+1 porque voy a tener un usuario con el id n=cantidad de usuarios
         this.usuarios = new Usuario[longitud];
         this.posicionesEnHeap = new int[longitud];
-        
-        // usuarios = new Usuario[cantidadUsuarios + 1]; //+1 pq IDs van de 1 a n
-        // posicionesEnHeap = new int[cantidadUsuarios + 1]; // para rastrear posiciones en heap
-        // this.usuarios[0] = new Usuario(0,0);
-        // this.posicionesEnHeap[0] = 0;
-        // for (int i = 1; i <= cantidadUsuarios; i++) {
-        //     this.usuarios[i] = new Usuario(i, 0); // balance inicial 0
-        //     this.posicionesEnHeap[i] = i-1; // posición inicial en heap (0-indexado)
-        // } // ver si las posiciones deberian ser [i - 1] en vez de [i]
     }
 
     public void agregar(Usuario usuario){
@@ -59,32 +50,3 @@ public class Diccionario {
 
 
 }
-
-
-
-    // IMPLEMENTACION ANTERIOR DE DICCIONARIO
-
-
-    // private ArrayList<int[]> dict;
-
-    // public Diccionario(){
-    //     ArrayList<int[]> dict = new ArrayList<int[]>();
-    // }
-
-    // public void agregar(int id){
-    //     int[] nuevaPersona = new int[2];
-    //     nuevaPersona[0] = id;
-    //     nuevaPersona[1] = id - 1; // Al crear la berreta la posicion de cada persona en personaBalance es su id-1
-    //     dict.add(nuevaPersona); 
-    // }
-
-    // public int posicion (int id){ // buscar la posicion por el id 
-    //     int res = (dict.get(id-1))[1];
-    //     return res;
-    // }
-
-    // public void modificar (int id,int nuevaPosicion){ //modifica la posicion de una persona en el Heap
-    //     int[] personaBuscada = dict.get(id-1);
-    //     personaBuscada[1] = nuevaPosicion;
-    //     dict.set(id-1,personaBuscada);
-    // }

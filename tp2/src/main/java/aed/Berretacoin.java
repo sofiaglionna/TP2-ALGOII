@@ -122,5 +122,7 @@ public class Berretacoin {
         int NuevaPosicionVendedor = mayorTenedor.reubicar(posVendedor);
         diccionarioUsuarios.actualizarPosicionEnHeap(id_vendedor,NuevaPosicionVendedor);
     }
+
+    
 }
 

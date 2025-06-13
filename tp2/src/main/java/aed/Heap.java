@@ -2,12 +2,70 @@ package aed;
 import java.util.ArrayList;
 
 public class Heap<T extends Comparable<T>> { // el cmparable es para poder usar el compareto que hicimos en Transaccion (q no tire error por estar usando un tipo T genérico)
-    private ArrayList<T> heap;   
- 
+    private ArrayList<T> heap;
+    private Diccionario diccionario;
+
     public Heap() {
-        heap = new ArrayList<>(); // este constructor es para un heap vacio. Ver si iniciar con un tamaño desde berreta.
+        this.heap = new ArrayList<>(); // este constructor es para un heap vacio. Ver si iniciar con un tamaño desde berreta.
+        this.diccionario = null;
+    }
+
+    public Heap(Diccionario dict) {
+        this.heap = new ArrayList<>();
+        this.diccionario = dict;
     }
     
+    //ver si lo usamos
+    public void setDiccionario(Diccionario dict) {
+        this.diccionario = dict;
+    }
+
+    // private int[] moverUno (int indice){ // int[2] = [nueva posicion usuario, posicion del empujado]
+    //     T actual = heap.get(indice);
+    //     T padre = heap.get((indice -1)/2);
+    //     int i_izq = 2*indice + 1;
+    //     int i_der = 2* indice + 2;
+    //     int[] res = new int[2];
+    //     if (actual.compareTo(padre) == 1);
+    //             heap.set((indice - 1) / 2, actual);
+    //             heap.set(indice, padre);
+    //             res [0] = (indice-1)/2;
+    //             res [1] = indice;
+    //             return res;
+    //     if()
+    //     // si es mas chico que sus hijos hacer un solo paso de sift down
+    //     else()
+    //     //si esta en la posicion correcta devolver 2 veces su propia posicion. Luego en berreta digo de hacer esto while ambas posiciones del int[] son distintas
+    // }
+
+    // Método auxiliar para intercambiar elementos y actualizar posiciones
+    // private void intercambiar(int i, int j) {
+    //     T temporal = heap.get(i);
+    //     heap.set(i, heap.get(j));
+    //     heap.set(j, temporal);
+        
+    //     // Actualizar posiciones en el diccionario si existe
+    //     if (diccionario != null) {
+    //         // Asumiendo que T es Usuario y tiene un método getId()
+    //         Usuario usuario1 = (Usuario) heap.get(i);
+    //         Usuario usuario2 = (Usuario) heap.get(j);
+    //         diccionario.actualizarPosicionEnHeap(usuario1.id_usuario(), i);
+    //         diccionario.actualizarPosicionEnHeap(usuario2.id_usuario(), j);
+    //     }
+    // }
+
+    public int reubicar(int posicion){  // Reubica en el heap Y nos da la nueva posicion para poder actualizar el diccionario
+        int nuevaPos = siftUp_conIndice(posicion);
+
+        if (nuevaPos == posicion){
+            nuevaPos = siftDown_conIndice(posicion);   
+        }
+        
+        return nuevaPos;
+    }
+
+
+
     public void agregarSinOrdenar(T valor){ // agrega valores de a 1 al Heap sin ordenarlos. Cuando queremos ordenarlos usamos Heapify()
         heap.add(valor);
     }
@@ -134,15 +192,6 @@ public class Heap<T extends Comparable<T>> { // el cmparable es para poder usar 
          siftUp(heap.size()-1); // sube hasta el lugar correcto 
      }
 
-    public int reubicar(int posicion){  // Reubica en el heap Y nos da la nueva posicion para poder actualizar el diccionario
-        int nuevaPos = siftUp_conIndice(posicion);
-
-        if (nuevaPos == posicion){
-            nuevaPos = siftDown_conIndice(posicion);   
-        }
-        
-        return nuevaPos;
-    }
 
     public T eliminarRaiz() { //elimina la raiz y ordena el heap
         if (heap.isEmpty()) {
