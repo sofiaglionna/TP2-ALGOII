@@ -1,5 +1,4 @@
 package aed;
-import java.util.ArrayList;
 
 public class Diccionario {
     //VER SI LA LISTA DE USUARIOS ES NECESARIA
@@ -8,15 +7,23 @@ public class Diccionario {
     private int longitud;
 
     public Diccionario(int cantidadUsuarios) {
-        longitud = cantidadUsuarios;
-        usuarios = new Usuario[cantidadUsuarios + 1]; //+1 pq IDs van de 1 a n
-        posicionesEnHeap = new int[cantidadUsuarios + 1]; // para rastrear posiciones en heap
-        this.usuarios[0] = new Usuario(0,0);
-        this.posicionesEnHeap[0] = 0;
-        for (int i = 1; i <= cantidadUsuarios; i++) {
-            this.usuarios[i] = new Usuario(i, 0); // balance inicial 0
-            this.posicionesEnHeap[i] = i-1; // posición inicial en heap (0-indexado)
-        } // ver si las posiciones deberian ser [i - 1] en vez de [i]
+        this.longitud = cantidadUsuarios+1; //+1 porque voy a tener un usuario con el id n=cantidad de usuarios
+        this.usuarios = new Usuario[longitud];
+        this.posicionesEnHeap = new int[longitud];
+        
+        // usuarios = new Usuario[cantidadUsuarios + 1]; //+1 pq IDs van de 1 a n
+        // posicionesEnHeap = new int[cantidadUsuarios + 1]; // para rastrear posiciones en heap
+        // this.usuarios[0] = new Usuario(0,0);
+        // this.posicionesEnHeap[0] = 0;
+        // for (int i = 1; i <= cantidadUsuarios; i++) {
+        //     this.usuarios[i] = new Usuario(i, 0); // balance inicial 0
+        //     this.posicionesEnHeap[i] = i-1; // posición inicial en heap (0-indexado)
+        // } // ver si las posiciones deberian ser [i - 1] en vez de [i]
+    }
+
+    public void agregar(Usuario usuario){
+        this.usuarios[usuario.id_usuario()] = usuario;
+        this.posicionesEnHeap[usuario.id_usuario()] = usuario.id_usuario()-1;
     }
 
     public Usuario obtenerUsuario(int id) {

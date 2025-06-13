@@ -5,13 +5,14 @@ public class Heap<T extends Comparable<T>> { // el cmparable es para poder usar 
     private ArrayList<T> heap;   
  
     public Heap() {
-        heap = new ArrayList<>(); // este constructor es para un heap vacio
+        heap = new ArrayList<>(); // este constructor es para un heap vacio. Ver si iniciar con un tamaño desde berreta.
     }
     
     public void agregarSinOrdenar(T valor){ // agrega valores de a 1 al Heap sin ordenarlos. Cuando queremos ordenarlos usamos Heapify()
         heap.add(valor);
     }
 
+    //ver si la usamos
     public void heapify(){
         int ultimoPadre =(heap.size() / 2) -1; // ese es el metodo para calcular el ultimo nodo padre
         for(int i = ultimoPadre; i >=0; i--) { // recorro desde el ultimo padre hasta la raiz y aplica sifDown a cada uno
@@ -45,92 +46,94 @@ public class Heap<T extends Comparable<T>> { // el cmparable es para poder usar 
             }
         }
     }
-    private int siftUp_conIndice(int indice) { // compara con el padre
-        while(indice >= 1) {
-            T actual = heap.get(indice);
-            T padre = heap.get((indice - 1) / 2);
-            if(actual.compareTo(padre) == 1) { // si el actual es "mayor" al padre los intercambia.
-                heap.set((indice - 1) / 2, actual);
-                heap.set(indice, padre);
-                indice = (indice - 1) / 2;
-            }
-            else {
-                break;
-            }
-        }
-        return indice;
-    }
-        
-    public void agregar(T otro) {
-        heap.add(otro); // se agrega al final
-        siftUp(heap.size()-1); // sube hasta el lugar correcto 
-    }
-
+    //cambiar palabras (chat)
     private void siftDown(int indice) {
         while(true) {
-            int i_izq = 2 * indice + 1;
-            int i_der = 2 * indice + 2;
-            int menor = indice;
-            if(i_der < heap.size()) { 
-                T derecha = heap.get(i_der);
-                T izquierda = heap.get(i_izq);
-                T actual = heap.get(indice);
-                if ((derecha.compareTo(actual) == 1) && (derecha.compareTo(izquierda) == 1)) {
-                    menor = i_der;
-                }
-            }
-            else if(i_izq < heap.size()) { 
+            int i_izq = 2*indice + 1;
+            int i_der = 2* indice + 2;
+            int mayor = indice;
+            
+            if(i_izq < heap.size()) {
                 T izquierda = heap.get(i_izq);
                 T actual = heap.get(indice);
                 if(izquierda.compareTo(actual) == 1) {
-                    menor = i_izq;
+                    mayor = i_izq;
                 }
             }
-            if(menor != indice) {
+            if(i_der < heap.size()) {
+                T derecha = heap.get(i_der);
+                T mayorActual = heap.get(mayor);
+                if(derecha.compareTo(mayorActual) == 1) {
+                    mayor = i_der;
+                }
+            }
+            
+            if(mayor != indice) {
                 T temporal = heap.get(indice);
-                heap.set(indice, heap.get(menor));
-                heap.set(menor, temporal);
-                indice = menor;
+                heap.set(indice, heap.get(mayor));
+                heap.set(mayor, temporal);
+                indice = mayor;
             }
             else {
                 break;
             }
         }
     }
-    
     private int siftDown_conIndice(int indice) {
         while(true) {
-            int i_izq = 2 * indice + 1;
-            int i_der = 2 * indice + 2;
-            int menor = indice;
-            if(i_der < heap.size()) { 
-                T derecha = heap.get(i_der);
-                T izquierda = heap.get(i_izq);
-                T actual = heap.get(indice);
-                if ((derecha.compareTo(actual) == 1) && (derecha.compareTo(izquierda) == 1)) {
-                    menor = i_der;
-                }
-            }
-            else if(i_izq < heap.size()) { 
+            int i_izq = 2* indice+1;
+            int i_der = 2 *indice+2;
+            int mayor = indice;
+            
+            if(i_izq < heap.size()) {
                 T izquierda = heap.get(i_izq);
                 T actual = heap.get(indice);
                 if(izquierda.compareTo(actual) == 1) {
-                    menor = i_izq;
+                    mayor = i_izq;
                 }
             }
-            if(menor != indice) {
+            if(i_der < heap.size()) {
+                T derecha = heap.get(i_der);
+                T mayorActual = heap.get(mayor);
+                if(derecha.compareTo(mayorActual) == 1) {
+                    mayor = i_der;
+                }
+            }
+            
+            // Si el mayor no es el nodo actual, intercambiar y continuar
+            if(mayor != indice) {
                 T temporal = heap.get(indice);
-                heap.set(indice, heap.get(menor));
-                heap.set(menor, temporal);
-                indice = menor;
+                heap.set(indice, heap.get(mayor));
+                heap.set(mayor, temporal);
+                indice = mayor;
             }
             else {
-                return menor;
+                return indice; // Retorna la posición final
             }
         }
     }
-    
-    
+    private int siftUp_conIndice(int indice) { // compara con el padre
+         while(indice >= 1) {
+             T actual = heap.get(indice);
+             T padre = heap.get((indice - 1) / 2);
+             if(actual.compareTo(padre) == 1) { // si el actual es "mayor" al padre los intercambia.
+                 heap.set((indice - 1) / 2, actual);
+                 heap.set(indice, padre);
+                 indice = (indice - 1) / 2;
+             }
+             else {
+                 break;
+             }
+         }
+         return indice;
+    }
+        
+    // //ver si lo usamos, si no borrar tambien siftUp y siftDown sin indices
+    public void agregar(T otro) {
+        heap.add(otro); // se agrega al final
+         siftUp(heap.size()-1); // sube hasta el lugar correcto 
+     }
+
     public int reubicar(int posicion){  // Reubica en el heap Y nos da la nueva posicion para poder actualizar el diccionario
         int nuevaPos = siftUp_conIndice(posicion);
 
@@ -143,28 +146,16 @@ public class Heap<T extends Comparable<T>> { // el cmparable es para poder usar 
 
     public T eliminarRaiz() {
         if (heap.isEmpty()) {
-        return null;// si no hay raiz que eliminar devuelve null
+            return null;// si no hay raiz que eliminar devuelve null
+        }
+        if (heap.size() == 1) {
+            return heap.remove(0);
         }
         T raiz = heap.get(0);// obtengo la raiz
-
-        if (heap.size() == 1) {
-        return heap.remove(0);
-        }
         T ultimo = heap.remove(heap.size() - 1);// elimino el ultimo elemento
         heap.set(0, ultimo);// piso el elemento
         siftDown(0); //siftDown con el indice 0 
-
         return raiz;
     }
 }
-
-
-    //constructor por copia
-    // public Heap(T[] elementos) { // constructor del heap si le pasan elementos
-    //     heap = new ArrayList<T>(); // copia los elementos del heap
-    //     for (T elemento : elementos){
-    //         heap.add(elemento);
-    //     }
-    //     heapify(); // heapify para organizar los elementos y aseguro que siga cumpliendo ese orden O(n) al reorganizar el heap 
-    // }
 

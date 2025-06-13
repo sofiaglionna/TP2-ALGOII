@@ -21,7 +21,7 @@ public class Bloque {
             transacciones.agregarSinOrdenar(listaTrans[i]);
             if (listaTrans[i].id_comprador()!=0){
                 this.suma= this.suma + (listaTrans[i]).monto();
-                this.longitud += 1;
+                this.longitud ++;
             }
         }
         transacciones.heapify();
@@ -52,7 +52,10 @@ public class Bloque {
     }
 
     public Transaccion eliminarTransaccionMayor(){
-        return transacciones.eliminarRaiz();
+        Transaccion raiz = transacciones.eliminarRaiz();
+        this.suma = this.suma - raiz.monto();
+        this.longitud --;
+        return raiz;
     }
 }
 

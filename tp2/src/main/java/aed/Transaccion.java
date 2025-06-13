@@ -23,10 +23,10 @@ public class Transaccion implements Comparable<Transaccion> {
             } 
         else { //mismo monto
             if(this.id > otro.id) {
-                return -1; // mismo monto que el padre pero mayor id
+                return 1; // mismo monto que el padre pero mayor id
             }
             else {
-                return 1; // mismo monto que el padre pero menor id
+                return -1; // mismo monto que el padre pero menor id
             }     
         }
     }

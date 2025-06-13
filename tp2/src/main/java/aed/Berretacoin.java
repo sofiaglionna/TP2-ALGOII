@@ -9,7 +9,7 @@ public class Berretacoin {
     private Diccionario diccionarioUsuarios;
 
 
-    public Berretacoin(int n_usuarios){ // por el heapify la complejidad es O(n)
+    public Berretacoin(int n_usuarios){ // por el heapify la complejidad es O(P)
         blockchain = new Lista<Bloque>();
         transaccionesOrdenadasPorID = new Transaccion[n_usuarios]; //creo una lista de transacciones de tamaño n_usuarios
         //inicializamos el diccionario
@@ -18,12 +18,13 @@ public class Berretacoin {
         mayorTenedor = new Heap<Usuario>();
 
         //mayorTenedor.agregar(diccionarioUsuarios.obtenerUsuario(0)); // inserta el usuario con id 0 en el heap 
-        
+        //estamos volviendo a crear usuarios que ya creamos en diccionario
         for(int i = 1; i <= n_usuarios; i++) {
             Usuario usuarioNuevo = new Usuario(i,0);
+            diccionarioUsuarios.agregar(usuarioNuevo);
             mayorTenedor.agregarSinOrdenar(usuarioNuevo);
         }
-        mayorTenedor.heapify(); 
+        // mayorTenedor.heapify(); // necesario? como todos tienen el mismo monto nos va a ordenar por id, dejando el de menor id arriba del todo.
     }
 
     //tener en cuenta de no meter en ningun lado a las transacciones de creacion
@@ -40,26 +41,31 @@ public class Berretacoin {
             int id_comprador = tx.id_comprador();
             int id_vendedor = tx.id_vendedor();
 
+            // Si la transaccion no es la de creacion reubico comprador en el heap
+            if (id_comprador != 0) {
+                Usuario comprador = diccionarioUsuarios.obtenerUsuario(id_comprador);
+                comprador.actualizarBalance(comprador.balance() - tx.monto());
+                int posComprador = diccionarioUsuarios.obtenerPosicionEnHeap(id_comprador);
+                //MAAAAAAAAAAAL si reubico uno y luego reubico otro puede cambiar su poisicion NO ACTUALIZAMOS TODAS LAS POSICIONES, SOLO LAS DE LAS PERSONAS EN TRANSACCIONES
+                int nuevaPosicionComprador = mayorTenedor.reubicar(posComprador); 
+                diccionarioUsuarios.actualizarPosicionEnHeap(id_comprador,nuevaPosicionComprador);  // O(1)
+            }
+
             //referencias a los usuarios
-            Usuario comprador = diccionarioUsuarios.obtenerUsuario(id_comprador);
             Usuario vendedor = diccionarioUsuarios.obtenerUsuario(id_vendedor);
-
-            comprador.actualizarBalance(comprador.balance() - tx.monto()); // actualizo el diccionario, restandole lo que compró el usuario
+            // actualizo el diccionario, restandole lo que compró el usuario
             vendedor.actualizarBalance(vendedor.balance() + tx.monto()); 
-
             //obtenemos las posiciones actuales
-            int posComprador = diccionarioUsuarios.obtenerPosicionEnHeap(id_comprador);
             int posVendedor = diccionarioUsuarios.obtenerPosicionEnHeap(id_vendedor);            
             //REUBICAMOS O(log p)
-            int nuevaPosicionComprador = mayorTenedor.reubicar(posComprador); 
+            //MAAAAAAAAAAAL si reubico uno y luego reubico otro puede cambiar su poisicion NO ACTUALIZAMOS TODAS LAS POSICIONES, SOLO LAS DE LAS PERSONAS EN TRANSACCIONES
             int NuevaPosicionVendedor = mayorTenedor.reubicar(posVendedor);
-    
-            diccionarioUsuarios.actualizarPosicionEnHeap(id_comprador,nuevaPosicionComprador);  // O(1)
             diccionarioUsuarios.actualizarPosicionEnHeap(id_vendedor,NuevaPosicionVendedor); // O(1)
         } 
     }
 
     public Transaccion txMayorValorUltimoBloque(){
+        //ver si puede devolver una transaccion de creacion (en el ejercicio puede pasar)
         return blockchain.getCola().valor.transaccionMayor();
     }
 
@@ -86,22 +92,22 @@ public class Berretacoin {
         return ultimoNodo.valor.MontoMedio();
     }
 
-    public void hackearTx(){
+    public void hackearTx(){ //
 
-        // Extraer la transacción de mayor valor del último bloque (O(log nb))
-        Bloque ultimo = blockchain.obtener(blockchain.longitud() - 1); // guarda el ultimo bloque de la blockchain
+        // 1) Extraer la transacción de mayor valor del último bloque (O(log nb))
+        Bloque ultimo = blockchain.getCola().valor; // guarda el ultimo bloque de la blockchain
         Transaccion mayorValor = ultimo.eliminarTransaccionMayor(); // guarda la transaccion de mayor valor y lo elimina del heap
 
         // ¿CUMPLE CON O(log nb)?
         
-        // Restaurar el monto al comprador y vendedor (O(log P))        
+        // 2) Restaurar el monto al comprador y vendedor (O(log P))        
         Usuario comprador = diccionarioUsuarios.obtenerUsuario(mayorValor.id_comprador());
         Usuario vendedor = diccionarioUsuarios.obtenerUsuario(mayorValor.id_vendedor());
 
-        comprador.actualizarBalance(comprador.balance() + mayorValor.monto());
-        vendedor.actualizarBalance(vendedor.balance() - mayorValor.monto());       
-        
-        // Actualizar el heap mayorTenedor
+        comprador.actualizarBalance(comprador.balance() + mayorValor.monto()); //se le suma el monto porque estoy eliminando la transaccion del heap. Igual apra e
+        vendedor.actualizarBalance(vendedor.balance() - mayorValor.monto());
+        //3)
+        // 4) reordenar el heap mayorTenedor
 
         // Implementar
 
