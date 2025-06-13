@@ -144,7 +144,7 @@ public class Heap<T extends Comparable<T>> { // el cmparable es para poder usar 
         return nuevaPos;
     }
 
-    public T eliminarRaiz() {
+    public T eliminarRaiz() { //elimina la raiz y ordena el heap
         if (heap.isEmpty()) {
             return null;// si no hay raiz que eliminar devuelve null
         }

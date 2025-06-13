@@ -96,21 +96,31 @@ public class Berretacoin {
 
         // 1) Extraer la transacción de mayor valor del último bloque (O(log nb))
         Bloque ultimo = blockchain.getCola().valor; // guarda el ultimo bloque de la blockchain
-        Transaccion mayorValor = ultimo.eliminarTransaccionMayor(); // guarda la transaccion de mayor valor y lo elimina del heap
+        Transaccion mayorValor = ultimo.eliminarTransaccionMayor(); // guarda la transaccion de mayor valor y lo elimina del heap y reordena el heap de transacciones
 
         // ¿CUMPLE CON O(log nb)?
         
-        // 2) Restaurar el monto al comprador y vendedor (O(log P))        
-        Usuario comprador = diccionarioUsuarios.obtenerUsuario(mayorValor.id_comprador());
-        Usuario vendedor = diccionarioUsuarios.obtenerUsuario(mayorValor.id_vendedor());
+        // 2) Restaurar el monto al comprador y vendedor (O(log P)) 
+        int id_comprador = mayorValor.id_comprador();
+        int id_vendedor = mayorValor.id_vendedor();
+        
+        Usuario comprador = diccionarioUsuarios.obtenerUsuario(id_comprador);
+        Usuario vendedor = diccionarioUsuarios.obtenerUsuario(id_vendedor);
 
         comprador.actualizarBalance(comprador.balance() + mayorValor.monto()); //se le suma el monto porque estoy eliminando la transaccion del heap. Igual apra e
         vendedor.actualizarBalance(vendedor.balance() - mayorValor.monto());
-        //3)
-        // 4) reordenar el heap mayorTenedor
+        
+        // 3) reordenar el heap mayorTenedor (falta hacer bien reubicar para que modifique la posicion de todos)
 
-        // Implementar
+       
+        int posComprador = diccionarioUsuarios.obtenerPosicionEnHeap(id_comprador);            
+        int nuevaPosicionComprador = mayorTenedor.reubicar(posComprador);
+        diccionarioUsuarios.actualizarPosicionEnHeap(id_comprador,nuevaPosicionComprador);
 
+
+        int posVendedor = diccionarioUsuarios.obtenerPosicionEnHeap(id_vendedor);            
+        int NuevaPosicionVendedor = mayorTenedor.reubicar(posVendedor);
+        diccionarioUsuarios.actualizarPosicionEnHeap(id_vendedor,NuevaPosicionVendedor);
     }
 }
 
